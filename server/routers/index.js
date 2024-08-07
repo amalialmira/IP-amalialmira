@@ -11,10 +11,12 @@ router.post('/login', UserController.login)
 router.post('/auth/google', UserController.googleLogin)
 
 router.get('/books', BookController.getAllBooks)
+router.post('/getreccomendation', isAuthenticate, BookController.getRec)
 router.get('/myreadlist', isAuthenticate, ListController.showReadingList)
 router.post('/myreadlist/add/:id', isAuthenticate, ListController.addToReadingList)
 router.delete('/myreadlist/delete/:id', isAuthenticate, ListController.deleteReadingList)
 router.put('/myreadlist/edit/:id', isAuthenticate, ListController.editReadingList)
+
 
 
 module.exports = router

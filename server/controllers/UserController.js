@@ -59,7 +59,7 @@ class UserController {
             });
             const payload = ticket.getPayload();
             const [user, created] = await User.findOrCreate({
-                where: { email },
+                where: { email: payload.email },
                 defaults: {
                     username: payload.name,
                     email: payload.email,

@@ -1,3 +1,4 @@
+const geminiAi = require("../helpers/gemini-ai")
 const { Book } = require("../models")
 const { Op } = require("sequelize")
 
@@ -63,6 +64,31 @@ class BookController {
         } catch (error) {
             // next(error)
             console.log(error);
+        }
+    }
+
+    static async getRec(req, res, next){
+        try {
+            console.log("<<<<<<");
+            const {genre, mood} = req.body
+
+            let books = await Book.findAll()
+            books = books.map(el => {
+                return {
+                    id: el.id,
+                    title: el.title,
+                    category: el.category,
+                    description: el.description,
+                    imgUrl: el.imgUrl
+                }
+            })
+
+            let data = await geminiAi(genre, mood, JSON.stringify(books))
+
+            res.status(200).json(data)
+
+        } catch (error) {
+            next(error)
         }
     }
 }

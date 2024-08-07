@@ -111,3 +111,4 @@ describe ('POST /login', () => {
         expect(response.body).toHaveProperty('message', 'invalid email/password')
     })
 })
+
