@@ -14,10 +14,10 @@ app.use(express.json())
 
 app.use (router)
 
-app.listen(port, () => {
-    console.clear();
-    console.log(`Example app listening on port ${port}`)
-  })
+// app.listen(port, () => {
+//     console.clear();
+//     console.log(`Example app listening on port ${port}`)
+//   })
 
 app.use(errorHandler)
 

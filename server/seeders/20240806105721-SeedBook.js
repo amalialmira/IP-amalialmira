@@ -18,7 +18,7 @@ module.exports = {
     let allBooks = []
 
     for (let x = 0; x < genre.length; x++) {
-      let { data } = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=subject:${genre[x]}&key=AIzaSyBeDzON9q5KGuUaXq3Sj1-VN5HFwdmN6cI&printType=books&maxResults=40`)
+      let { data } = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=subject:${genre[x]}&key=${process.env.API_KEY}&printType=books&maxResults=40`)
       // console.log(data);
       ;
       let perBook = data.items.map(el => {

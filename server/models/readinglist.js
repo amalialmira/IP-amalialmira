@@ -22,7 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: "to read"
     },
-    notes: DataTypes.TEXT
+    notes: {
+      type: DataTypes.TEXT,
+      defaultValue: "you havent added any notes"
+    }
   }, {
     sequelize,
     modelName: 'ReadingList',
