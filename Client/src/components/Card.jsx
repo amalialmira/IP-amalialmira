@@ -1,7 +1,44 @@
+import Swal from "sweetalert2"
+import RequestBooks from "../helpers/RequestBooks"
+import check from "../assets/Untitled design-2.gif"
+
+
 const Card = (props) => {
 
     const { book } = props
-    console.log(book);
+    // console.log(book);
+
+
+    const handleAdd =  async (BookId) => {
+        try {
+            let { data } = await RequestBooks({
+                url: `/myreadlist`,
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+                },
+                data: {
+                    BookId
+                }
+            })
+            Swal.fire({
+                title: "Sweet!",
+                text: `Successfuly added to your reading list!`,
+                imageUrl: check,
+                imageWidth: 200,
+                imageAlt: "Custom image"
+              });
+        } catch (error) {
+            console.log(error);
+            if(error.response.status){
+                Swal.fire({
+                    title: "Error!",
+                    text: `${error.response.data.message}`,
+                    icon: "error",
+                  });
+            }
+        }
+    }
 
     return (
         <div>
@@ -23,7 +60,11 @@ const Card = (props) => {
                         className="px-5 py-2.5 mr-1 rounded-full text-white text-sm tracking-wider font-medium border border-current outline-none bg-[#333] hover:bg-[#222] active:bg-[#333]">
                         Details
                     </button>
-                    <button type="button"
+                    <button
+                    onClick={() => {
+                        handleAdd(book.id)
+                    }}
+                    type="button"
                         className="px-5 py-2.5 rounded-full text-white text-sm tracking-wider font-medium border border-current outline-none bg-[#333] hover:bg-[#222] active:bg-[#333]">
                         + List
                     </button>

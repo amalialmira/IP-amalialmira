@@ -3,12 +3,18 @@ import Card from "../components/Card"
 import Hero from "../components/Hero"
 import RequestBooks from "../helpers/RequestBooks"
 import gif from "../assets/flip.gif"
+import Pagination from "../components/Pagination"
 
 const Home = () => {
 
     const [recBooks, setRecBooks] = useState([])
     const [mood, setMood] = useState("")
     const [books, setBooks] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState("")
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPage, setTotalPage] = useState()
+    const [searchBook, setSearchBook] = useState("")
+
 
 
     const getAllBooks = async () => {
@@ -18,9 +24,18 @@ const Home = () => {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+                },
+                params: {
+                    page: {
+                        size: 10,
+                        number: currentPage
+                    },
+                    search: searchBook,
+                    filter: selectedCategory,
                 }
             })
             setBooks(data.data)
+            setTotalPage(data.totalPage)
 
         } catch (error) {
             console.log(error);
@@ -47,9 +62,21 @@ const Home = () => {
         }
     }
 
+    function nextPage(){
+        setCurrentPage(currentPage + 1)
+    }
+
+    function prevPage(){
+        setCurrentPage(currentPage - 1)
+    }
+
     useEffect(() => {
         getAllBooks()
     }, [])
+
+    useEffect(() => {
+        getAllBooks()
+    }, [currentPage, searchBook, selectedCategory])
 
     return (
         <div className="bg-[#F6F6F6] px-10">
@@ -65,9 +92,11 @@ const Home = () => {
                         ))}
 
                     </div>
+                    <Pagination currentPage={currentPage} nextPage={nextPage} prevPage={prevPage} totalPage={totalPage}/>
                 </div>
             </div>
 
+            {/* ai section */}
             <div className="font-[sans-serif] bg-[#40A557] rounded-xl">
                 <div className="flex flex-col items-center justify-center py-6 px-4">
                     <div className="grid md:grid-cols-2 items-center gap-4 max-w-6xl w-full">
@@ -122,7 +151,6 @@ const Home = () => {
             </div>
 
 
-
             <div id="gemini" className="font-[sans-serif] bg-[#F6F6F6] pt-10">
                 <div style={{ fontFamily: "League Spartan" }} className="mx-auto lg:max-w-full sm:max-w-full">
                     <h2 className="text-4xl font-extrabold text-[#3C3D3D] mb-12 text-center">
@@ -137,6 +165,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+            
 
         </div>
     )

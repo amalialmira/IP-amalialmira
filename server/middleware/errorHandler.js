@@ -29,10 +29,9 @@ function errorHandler(err, req, res, next){
             status = 401
             message = 'invalid email/password'
             break
-        case 'empty':
+        case 'added-already':
             status = 400
-            message = 'image is required'
-            break
+            message = 'book already been added to your reading list'
     }
 
     res.status(status).json({message})

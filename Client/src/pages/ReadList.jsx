@@ -67,10 +67,6 @@ const ReadList = () => {
         }
     }
 
-    const editReadingList = async (id) => {
-
-    }
-
     useEffect(() => {
         getReadingList()
     }, [])
@@ -156,7 +152,7 @@ const ReadList = () => {
                                                     className="mr-4"
                                                     title="Delete"
                                                     onClick={() =>
-                                                        deleteBook(el.Book.id)
+                                                        deleteBook(el.id)
                                                     }
                                                 >
                                                     <svg xmlns="http://www.w3.org/2000/svg" className="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">

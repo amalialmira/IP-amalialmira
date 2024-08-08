@@ -19,14 +19,27 @@ class ListController {
     }
     static async addToReadingList (req, res, next){
         try {
-            const {id} = req.params
-            let find = await Book.findByPk(id)
-
-            await ReadingList.create({
-                UserId: req.user.id,
-                BookId: id
+            const {UserId = req.user.id, BookId} = req.body
+            let find = await ReadingList.findOne({
+                where: {UserId},
+                include: {
+                    model: Book,
+                    where:{
+                        id: BookId
+                    }
+                }
             })
-            res.status(201).json({message: `succesfully adding ${find.title} to your Reading List!`})
+
+            if (find){
+                throw {name: 'added-already'}
+            }
+
+            let newList = await ReadingList.create({UserId, BookId})
+            let newFind = await ReadingList.findByPk(newList.id, {
+                include: Book
+            })
+
+            res.status(201).json({message: `succesfully adding ${newFind.Book.title} to your Reading List!`})
         } catch (error) {
             next(error)
             // console.log(error);
@@ -41,7 +54,7 @@ class ListController {
 
             await ReadingList.destroy({
                 where: {
-                    BookId: id
+                    id
                 }
             })
             res.status(200).json({message: `succesfully deleting ${deleted.title} from your Reading List!`})
@@ -55,23 +68,28 @@ class ListController {
             const {id} = req.params
             const { notes, status } = req.body
             // console.log(id, notes, status, "!!!!!");
-            let toEdit = await ReadingList.findOne({
-                where: {
-                    BookId: id
-                },
-                include: Book
-
-            })
 
             await ReadingList.update({notes, status},{
                 where: {
-                    BookId: id
+                    id
                 }
             })
-            res.status(200).json(toEdit)
+            res.status(200).end()
         } catch (error) {
             console.log(error);
             // next(error)
+        }
+    }
+    static async getListById (req, res,next){
+        try {
+            const {id} = req.params
+            let toEdit = await ReadingList.findByPk(id, {
+                include: Book
+            })
+            res.status(200).json(toEdit)
+
+        } catch (error) {
+            next(error)
         }
     }
 

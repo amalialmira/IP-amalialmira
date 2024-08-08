@@ -260,10 +260,14 @@ describe('GET /myreadlist', () => {
 
 })
 
-describe('POST /myreadlist/add/:id', () => {
-    test('POST /myreadlist/add/:id success creating new readinglist', async () => {
-        let response = await request(app).post('/myreadlist/add/2')
+describe('POST /myreadlist', () => {
+    test('POST /myreadlist success creating new readinglist', async () => {
+        let response = await request(app).post('/myreadlist')
             .set('Authorization', `Bearer ${access_token}`)
+            .send({
+                UserId : 1,
+                BookId: 2
+            })
 
         expect(response.status).toBe(201)
         expect(response.body).toBeInstanceOf(Object)
