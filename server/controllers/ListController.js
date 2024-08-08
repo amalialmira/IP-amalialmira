@@ -1,3 +1,4 @@
+const { where } = require('sequelize')
 const { Book, User, ReadingList } = require('../models')
 const book = require('../models/book')
 
@@ -50,16 +51,24 @@ class ListController {
     }
     static async editReadingList(req, res, next){
         try {
-            console.log("DISINI");
+            // console.log("DISINI");
             const {id} = req.params
             const { notes, status } = req.body
-            console.log(id, notes, status, "!!!!!");
+            // console.log(id, notes, status, "!!!!!");
+            let toEdit = await ReadingList.findOne({
+                where: {
+                    BookId: id
+                },
+                include: Book
+
+            })
+
             await ReadingList.update({notes, status},{
                 where: {
                     BookId: id
                 }
             })
-            res.status(200).end()
+            res.status(200).json(toEdit)
         } catch (error) {
             console.log(error);
             // next(error)

@@ -70,7 +70,7 @@ class BookController {
     static async getRec(req, res, next){
         try {
             console.log("<<<<<<");
-            const {genre, mood} = req.body
+            const {mood} = req.body
 
             let books = await Book.findAll()
             books = books.map(el => {
@@ -83,7 +83,7 @@ class BookController {
                 }
             })
 
-            let data = await geminiAi(genre, mood, JSON.stringify(books))
+            let data = await geminiAi(mood, JSON.stringify(books))
 
             res.status(200).json(data)
 
