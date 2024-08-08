@@ -33,7 +33,7 @@ class BookController {
                 }
             }
             
-            let limit = 20
+            let limit = 10
             let pageNumber = 1
 
             if (page){

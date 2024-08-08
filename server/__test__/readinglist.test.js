@@ -243,6 +243,20 @@ describe('GET /myreadlist', () => {
         expect(response.body[0]).toHaveProperty('notes', expect.any(String))
         expect(response.body[0]).toHaveProperty('Book', expect.any(Object))
     })
+    test('GET /myreadlist failed should return list of users reading list', async () => {
+        let response = await request(app).get('/myreadlist')
+            .set('Authorization', `Bearer ${access_token}`)
+
+        // console.log(response.body, "<<<<<<<<");
+        expect(response.status).toBe(200)
+        expect(response.body[0]).toBeInstanceOf(Object)
+        expect(response.body[0]).toHaveProperty('id', expect.any(Number));
+        expect(response.body[0]).toHaveProperty('UserId', expect.any(Number));
+        expect(response.body[0]).toHaveProperty('BookId', expect.any(Number));
+        expect(response.body[0]).toHaveProperty('status', 'to read');
+        expect(response.body[0]).toHaveProperty('notes', expect.any(String))
+        expect(response.body[0]).toHaveProperty('Book', expect.any(Object))
+    })
 
 })
 

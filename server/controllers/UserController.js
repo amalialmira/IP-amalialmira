@@ -73,6 +73,7 @@ class UserController {
             const token = signToken({ id: user.id }, process.env.JWT_SECRET);
             res.status(created ? 201 : 200).json({ access_token: token });
         } catch (error) {
+            console.log(error, "INI DISINI ERROR NYA");
             next(error)
         }
     }
