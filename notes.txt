@@ -5,3 +5,27 @@ npx sequelize-cli model:create --name "User" --attributes username:string,email:
 npx sequelize-cli model:create --name "Book" --attributes title:string,author:string,publisher:string,description:text,category:string,imgUrl:text,previewUrl:text
 
 npx sequelize-cli model:create --name "ReadingList" --attributes UserId:integer,BookId:integer,status:string,notes:text
+
+module.exports = {
+  apps : [{
+    name   : "app1",
+    script : "./app.js"
+  }]
+}
+
+module.exports = {
+    apps: [{
+        name: "IP",
+        script: "./bin/www",
+            env: {
+                NODE_ENV: "production",
+                PORT: 80,
+                DATABASE_URL: "postgresql://postgres.dgzjnubdtgpslcuqxfsq:7FD8e648HcbDnAoK@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres",
+                JWT_SECRET: "rumpinosecret"
+                API_KEY: "AIzaSyBeDzON9q5KGuUaXq3Sj1-VN5HFwdmN6cI"
+                GOOGLE_CLIENT_ID: "254553233529-oi1qjlhb73lho9govfuimk0jj66kd8pa.apps.googleusercontent.com"
+                GOOGLE_CLIENT_SECRET: "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"
+                GEMINI_KEY: "AIzaSyAzEVORrTMkcHPQIIJlt-1ttjlekNiY4Vk"
+            }
+    }]
+}
