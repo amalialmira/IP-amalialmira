@@ -56,10 +56,10 @@ const Card = (props) => {
                     <h3 className="text-lg font-semibold text-[#3C3D3D] mb-2 h-14">
                         {book.title}
                     </h3>
-                    <button type="button"
+                    {/* <button type="button"
                         className="px-5 py-2.5 mr-1 rounded-full text-white text-sm tracking-wider font-medium border border-current outline-none bg-[#333] hover:bg-[#222] active:bg-[#333]">
                         Details
-                    </button>
+                    </button> */}
                     <button
                     onClick={() => {
                         handleAdd(book.id)

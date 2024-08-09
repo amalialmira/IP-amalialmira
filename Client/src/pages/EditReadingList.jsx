@@ -11,8 +11,12 @@ const EditPage = () => {
     const [description, setDescription] = useState("")
     const [imgUrl, setImgUrl] = useState("")
 
+    let stat = ["To Read", "Reading", "Finished"]
+
     const { id } = useParams()
     // console.log(id);
+
+    const navigate = useNavigate()
 
     const getBookById = async () => {
         try {
@@ -28,6 +32,8 @@ const EditPage = () => {
             setTitle(data.Book.title)
             setDescription(data.Book.description)
             setImgUrl(data.Book.imgUrl)
+            setNotes(data.notes)
+            setStatus(data.status)
             // console.log(toEdit);
 
         } catch (error) {
@@ -50,6 +56,7 @@ const EditPage = () => {
                     notes
                 }
             });
+            navigate('/myreadinglist')
             Swal.fire({
                 title: "Good job!",
                 text: "Successfully edit your status and notes!",
@@ -67,7 +74,7 @@ const EditPage = () => {
 
 
     return (
-        <div style={{ fontFamily: "League Spartan" }} className="h-screen font-[sans-serif] bg-[#40A557]">
+        <div style={{ fontFamily: "League Spartan" }} className="h-auto font-[sans-serif] bg-[#40A557]">
             <div className=" flex flex-col items-center justify-center align-middle">
                 <div style={{ boxShadow: "#3C3D3D 10px 10px 0 0" }} className="grid bg-[#F6F6F6] md:grid-cols-2 items-center gap-4 max-md:gap-8 max-w-6xl max-md:max-w-lg w-full p-4 m-4 border-2 border-[#3C3D3D] rounded-xl">
                     <div className="md:max-w-md w-full px-4 py-4">
@@ -85,7 +92,7 @@ const EditPage = () => {
                                     Status
                                 </label>
                                 <div className="relative flex items-center">
-                                    <input
+                                    {/* <input
                                         className="w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
                                         name="status"
                                         placeholder="Change"
@@ -95,7 +102,18 @@ const EditPage = () => {
                                         onChange={(e) => {
                                             setStatus(e.target.value)
                                         }}
-                                    />
+                                    /> */}
+                                    <select
+                                        value={status}
+                                        name="categoryId"
+                                        onChange={(e) => {
+                                            setStatus(e.target.value)
+                                        }}
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                        {stat.map((el, i) => (
+                                            <option key={i} value={el}>{el}</option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                             <div className="mt-8">
@@ -104,7 +122,7 @@ const EditPage = () => {
                                 </label>
                                 <div className="relative flex items-center">
                                     <input
-                                        className="w-full text-gray-800 text-sm border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
+                                        className="w-full text-gray-800 text-sm border rounded-lg border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
                                         name="notes"
                                         placeholder="put your notes here"
                                         required
@@ -119,7 +137,7 @@ const EditPage = () => {
                             <div className="mt-12">
                                 <button
                                     className="w-full py-2.5 px-4 text-sm tracking-wide rounded-full text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
-                                    type="button"
+                                    type="submit"
                                 >
                                     Edit
                                 </button>

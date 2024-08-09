@@ -4,6 +4,7 @@ import Hero from "../components/Hero"
 import RequestBooks from "../helpers/RequestBooks"
 import gif from "../assets/flip.gif"
 import Pagination from "../components/Pagination"
+import Search from "../components/Search"
 
 const Home = () => {
 
@@ -81,11 +82,12 @@ const Home = () => {
     return (
         <div className="bg-[#F6F6F6] px-10">
             <Hero />
-            <div id="BooksPage" className="font-[sans-serif] bg-[#F6F6F6] pt-10">
-                <div style={{ fontFamily: "League Spartan" }} className="mx-auto lg:max-w-full sm:max-w-full">
-                    <h2 className="text-4xl font-extrabold text-[#3C3D3D] mb-12 text-center">
+            <div  className="font-[sans-serif] bg-[#F6F6F6] ">
+                <div id="BooksPage" style={{ fontFamily: "League Spartan" }} className="mx-auto lg:max-w-full sm:max-w-full pt-10">
+                    <h2 className="text-4xl font-extrabold text-[#3C3D3D] mb-5 text-center mt-20">
                         Find your literary treasure here
                     </h2>
+                    <Search getAllBooks={getAllBooks} searchBook={searchBook} setSearchBook={setSearchBook} />
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 max-xl:gap-4 gap-6 p-5 ">
                         {books.map((book, i) => (
                             <Card key={i} book={book} />
